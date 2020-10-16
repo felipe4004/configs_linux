@@ -1,9 +1,11 @@
 set number
 set relativenumber
 set tabstop=2
+set colorcolumn=80
 set autoindent
 set expandtab	
 set smarttab
+set incsearch
 set shiftwidth=2
 set ruler
 set softtabstop=4
@@ -19,19 +21,37 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
-Plug 'lervag/vimtex'
 Plug 'vim-syntastic/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
 Plug 'nvie/vim-flake8'
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-utils/vim-man'
+Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'vuciv/vim-bujo'
+Plug 'tpope/vim-dispatch'
+Plug '/home/mpaulson/personal/vim-apm'
+Plug 'theprimeagen/vim-be-good'
+Plug 'gruvbox-community/gruvbox'
+
+
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
+
+"Color scheme
+
+colorscheme gruvbox
+set background=dark
 
 "NERDTree settings
 
@@ -66,6 +86,8 @@ let g:multi_cursor_quit_key            = '<Esc>'
 
 
 let g:vimtex_view_method = 'zathura'
+
+noremap <C-d> :sh<cr>
 
 
 
@@ -120,3 +142,19 @@ autocmd Filetype tex inoremap ;ci  \begin{figure}<Enter>\centering<Enter>\begin{
 autocmd Filetype tex inoremap ;sci  \begin{subfigure}<Enter>\centering<Enter>\begin{circuitikz}[line width = .5pt, scale = .8, transform shape]<Enter>\draw<Enter><Enter>\end{circuitikz}<Enter>\caption{<++>}<Enter>\label{circ:<++>}<Enter>\end{subfigure}<Enter><Enter><++><Esc>6ki
 autocmd Filetype tex inoremap ;it   \begin{itemize}<Enter>\item<Enter>\end{itemize}<Enter><Enter><++><Esc>3kA
 autocmd Filetype tex inoremap ;df   \dfrac{}{<++>}<Space><++><Esc>Fclli
+
+"Markdown
+autocmd Filetype markdown map <F5> :!pandoc<space><C-r>%<space>-o<space><C-r>%.pdf<Enter><Enter>
+
+autocmd Filetype markdown map <F6> :!pandoc<space><C-r>%<space>-t<space>beamer<space>-o<space>%.pdf<Enter><Enter>
+
+
+" Atalho para fechamento automatico de brackets
+
+inoremap " ""<++><ESC>F"i
+inoremap ' ''<++><ESC>F'i
+inoremap ( ()<++><ESC>F)i
+inoremap [ []<++><ESC>F]i
+inoremap { {}<++><ESC>F}i
+inoremap {<CR> {<CR>}<++><ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
